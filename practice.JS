@@ -1,67 +1,7 @@
-let names = ["Tom", "Lily", "Jose", "Sarah"];
-let height = [65, 60, 72, 68];
+const content = document.getElementById('content');
+const button = document.getElementById('more-btn');
 
-let $ = function (id) { return document.querySelector("#"+id); };
-
-document.addEventListener("DOMContentLoaded", function () {
-    $("show_results").addEventListener("click", showResults);
-    $("add").addEventListener("click", addHeight);
-    $("display_height").addEventListener("click", displayHeight);
+button.addEventListener('click', function(){
+    const expanded = content.classList.toggle('expanded');
+    button.textContent = expanded ? 'Read Less' : 'Read More';
 });
-
-function showResults() {
-    let sum = 0;
-    for (let i = 0; i < height.length; i++) {
-        sum += height[i];
-    }
-    let average = sum/height.length;
-
-    let highest = height[0];
-    let tallest = 0;
-    for (let i = 1; i < height.length; i++){
-        if (height[i] > highest) {
-            highest = height[i];
-            tallest = i;
-        }
-    }
-
-    let tallestName = names[tallest];
-    $("result").innerHTML = "<h2>Results</h2><br><p>Average Height = " + average + "<br>Highest height = " + tallestName + "with a height of " + highest + "</p>";
-}
-
-function addHeight() {
-    let nameInput = $("name");
-    let heightInput = $("height");
-
-    if (nameInput == "" || isNaN(heightInput) || heightInput < 0 || heightInput > 100) {
-        alert("You must enter a name and a valid height");
-        $('name').focus();
-        return;
-    }
-    names.push(nameInput);
-    height.push(parseFloat(heightInput));
-
-    $('name').value="";
-    $('height').value="";
-    $('name').focus();
-}
-
-function displayHeight() {
-    let table = $("height_table");
-    table.innerHTML = "";
-
-    for (let i = 0; i < names.length; i++){
-        let row = document.createElement("tr");
-
-        let nameColumn = document.createElement("td");
-        nameColumn.textContent = names[i];
-        row.appendChild(nameColumn);
-
-        let heightColumn = document.createElement("td");
-        heightColumn.textContent = height[i];
-        row.appendChild(heightColumn);
-
-        table.appendChild(row);  
-    }
-    createTable(names, height);
-}
